@@ -21,6 +21,14 @@ cat << EOT > "${SRC_ROOT}/${1}.html"
         * {
             box-sizing: border-box;
         }
+
+        body {
+            background-color: #EEE;
+        }
+
+        canvas {
+            background-coler: #FFF;
+        }
     </style>
 </head>
 
