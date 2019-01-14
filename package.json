@@ -4,6 +4,7 @@
   "description": "Canvas触りたくて",
   "main": "index.html",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
