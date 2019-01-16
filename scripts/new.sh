@@ -41,9 +41,8 @@ cat << EOT > "${SRC_ROOT}/${1}.html"
 EOT
 
 cat << EOT > "${SRC_ROOT}/script/${1}.ts"
-function ${1//-/_}_main() {
-    const canvas = document.getElementById("canvas")! as HTMLCanvasElement;
-    const ctx = canvas.getContext("2d")!;
-}
-${1//-/_}_main();
+export { };
+
+const canvas = document.getElementById("canvas")! as HTMLCanvasElement;
+const ctx = canvas.getContext("2d")!;
 EOT
