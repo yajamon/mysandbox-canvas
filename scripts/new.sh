@@ -27,7 +27,7 @@ cat << EOT > "${SRC_ROOT}/${1}.html"
         }
 
         canvas {
-            background-coler: #FFF;
+            background-color: #FFF;
         }
     </style>
 </head>
