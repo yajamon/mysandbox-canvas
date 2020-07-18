@@ -38,11 +38,13 @@ const render = (ctx: CanvasRenderingContext2D, state: State) => {
         x: w / 2,
         y: h / 2,
     }
+    const transformX = (x: number) => center.x + x;
+    const transformY = (y: number) => center.y - y;
     const ballScaleRate = 10;
 
     let ball: Ball = {
-        x: center.x + state.ball.x,
-        y: center.y + state.ball.y,
+        x: transformX(state.ball.x),
+        y: transformY(state.ball.y),
         radius: state.ball.radius * ballScaleRate
     };
     ctx.beginPath();
