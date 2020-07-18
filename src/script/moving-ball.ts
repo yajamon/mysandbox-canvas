@@ -9,7 +9,15 @@ type Point = {
     x: number;
     y: number;
 };
-type Ball = Point & {
+type Vector = {
+    x: number;
+    y: number;
+}
+type Physics = {
+    a: Vector // acceleration
+    v: Vector // velocity
+}
+type Ball = Point & Physics & {
     radius: number;
 };
 type Size = {
@@ -21,12 +29,36 @@ type State = {
     ball: Ball;
 }
 
-const update = (state: State): State => {
+type DiffTime = number;
+const update = (state: State, dt: DiffTime): State => {
     const newState = { ...state };
     newState.ball = {
-        x: state.ball.x,
-        y: state.ball.y - 1,
+        x: state.ball.x + state.ball.v.x * dt,
+        y: state.ball.y + state.ball.v.y * dt,
         radius: state.ball.radius,
+        v: state.ball.v,
+        a: state.ball.a,
+    }
+    // safety
+    if (newState.ball.x < 0) {
+        newState.ball.x = 0;
+        newState.ball.v.x = 0;
+        newState.ball.a.x = 0;
+    }
+    if (newState.ball.x > newState.size.width) {
+        newState.ball.x = newState.size.width;
+        newState.ball.v.x = 0;
+        newState.ball.a.x = 0;
+    }
+    if (newState.ball.y < 0) {
+        newState.ball.y = 0;
+        newState.ball.v.y = 0;
+        newState.ball.a.y = 0;
+    }
+    if (newState.ball.y > newState.size.height) {
+        newState.ball.y = newState.size.height;
+        newState.ball.v.y = 0;
+        newState.ball.a.y = 0;
     }
     return newState
 };
@@ -44,11 +76,11 @@ const render = (ctx: CanvasRenderingContext2D, state: State) => {
     const transformY = (y: number) => origin.y + (reverseAxisY ? -y : y);
     const ballScaleRate = 10;
 
-    let ball: Ball = {
-        x: transformX(state.ball.x),
-        y: transformY(state.ball.y),
-        radius: state.ball.radius * ballScaleRate
-    };
+    const ball: Ball = { ...state.ball };
+    ball.x = transformX(state.ball.x);
+    ball.y = transformY(state.ball.y);
+    ball.radius = state.ball.radius * ballScaleRate;
+
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
     ctx.stroke();
@@ -61,11 +93,13 @@ let state: State = {
     },
     ball: {
         radius: 1,
-        x: 0,
-        y: 0,
+        x: w / 2,
+        y: h / 2,
+        v: { x: 0.1, y: 0.5 },
+        a: { x: 0, y: 0 },
     }
 }
 setInterval(() => {
-    state = update(state);
+    state = update(state, msForCycle);
     render(ctx, state);
 }, msForCycle);
