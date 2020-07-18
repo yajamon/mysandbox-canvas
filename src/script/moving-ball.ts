@@ -42,22 +42,22 @@ const update = (state: State, dt: DiffTime): State => {
     // safety
     if (newState.ball.x - newState.ball.radius < 0) {
         newState.ball.x = 0 + newState.ball.radius;
-        newState.ball.v.x = 0;
+        newState.ball.v.x = newState.ball.v.x * -1;
         newState.ball.a.x = 0;
     }
     if (newState.ball.x + newState.ball.radius > newState.size.width) {
         newState.ball.x = newState.size.width - newState.ball.radius;
-        newState.ball.v.x = 0;
+        newState.ball.v.x = newState.ball.v.x * -1;
         newState.ball.a.x = 0;
     }
     if (newState.ball.y - newState.ball.radius < 0) {
         newState.ball.y = 0 + newState.ball.radius;
-        newState.ball.v.y = 0;
+        newState.ball.v.y = newState.ball.v.y * -1;
         newState.ball.a.y = 0;
     }
     if (newState.ball.y + newState.ball.radius > newState.size.height) {
         newState.ball.y = newState.size.height - newState.ball.radius;
-        newState.ball.v.y = 0;
+        newState.ball.v.y = newState.ball.v.y * -1;
         newState.ball.a.y = 0;
     }
     return newState
