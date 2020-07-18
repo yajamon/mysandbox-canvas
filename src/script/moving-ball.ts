@@ -34,32 +34,35 @@ const update = (state: State, dtMilliseconds: DiffTime): State => {
     const dt = dtMilliseconds / 1000;
     const newState = { ...state };
     newState.ball = {
-        x: state.ball.x + state.ball.v.x * dt,
-        y: state.ball.y + state.ball.v.y * dt,
+        x: state.ball.x + state.ball.v.x * dt + state.ball.a.x * Math.pow(dt, 2) / 2,
+        y: state.ball.y + state.ball.v.y * dt + state.ball.a.y * Math.pow(dt, 2) / 2,
         radius: state.ball.radius,
-        v: state.ball.v,
+        v: {
+            x: state.ball.v.x + state.ball.a.x * dt,
+            y: state.ball.v.y + state.ball.a.y * dt,
+        },
         a: state.ball.a,
     }
     // safety
     if (newState.ball.x - newState.ball.radius < 0) {
         newState.ball.x = 0 + newState.ball.radius;
         newState.ball.v.x = newState.ball.v.x * -1;
-        newState.ball.a.x = 0;
+        newState.ball.a.x = newState.ball.a.x * -1;
     }
     if (newState.ball.x + newState.ball.radius > newState.size.width) {
         newState.ball.x = newState.size.width - newState.ball.radius;
         newState.ball.v.x = newState.ball.v.x * -1;
-        newState.ball.a.x = 0;
+        newState.ball.a.x = newState.ball.a.x * -1;
     }
     if (newState.ball.y - newState.ball.radius < 0) {
         newState.ball.y = 0 + newState.ball.radius;
         newState.ball.v.y = newState.ball.v.y * -1;
-        newState.ball.a.y = 0;
+        newState.ball.a.y = newState.ball.a.y * -1;
     }
     if (newState.ball.y + newState.ball.radius > newState.size.height) {
         newState.ball.y = newState.size.height - newState.ball.radius;
         newState.ball.v.y = newState.ball.v.y * -1;
-        newState.ball.a.y = 0;
+        newState.ball.a.y = newState.ball.a.y * -1;
     }
     return newState
 };
@@ -96,7 +99,7 @@ let state: State = {
         x: w / 2,
         y: h / 2,
         v: { x: 1.0, y: 5.0 },
-        a: { x: 0, y: 0 },
+        a: { x: 10.0, y: 5.0 },
     }
 }
 setInterval(() => {
