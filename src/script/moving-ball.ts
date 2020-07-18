@@ -30,7 +30,8 @@ type State = {
 }
 
 type DiffTime = number;
-const update = (state: State, dt: DiffTime): State => {
+const update = (state: State, dtMilliseconds: DiffTime): State => {
+    const dt = dtMilliseconds / 1000;
     const newState = { ...state };
     newState.ball = {
         x: state.ball.x + state.ball.v.x * dt,
@@ -94,7 +95,7 @@ let state: State = {
         radius: 10,
         x: w / 2,
         y: h / 2,
-        v: { x: 0.1, y: 0.5 },
+        v: { x: 1.0, y: 5.0 },
         a: { x: 0, y: 0 },
     }
 }
