@@ -18,9 +18,7 @@
   },
   "homepage": "https://github.com/yajamon/mysandbox-canvas#readme",
   "private": true,
-  "dependencies": {
-    "tslint": "^5.12.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^14.0.23",
     "typescript": "^3.9.7"
