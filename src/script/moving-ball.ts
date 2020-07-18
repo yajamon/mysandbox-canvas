@@ -40,23 +40,23 @@ const update = (state: State, dt: DiffTime): State => {
         a: state.ball.a,
     }
     // safety
-    if (newState.ball.x < 0) {
-        newState.ball.x = 0;
+    if (newState.ball.x - newState.ball.radius < 0) {
+        newState.ball.x = 0 + newState.ball.radius;
         newState.ball.v.x = 0;
         newState.ball.a.x = 0;
     }
-    if (newState.ball.x > newState.size.width) {
-        newState.ball.x = newState.size.width;
+    if (newState.ball.x + newState.ball.radius > newState.size.width) {
+        newState.ball.x = newState.size.width - newState.ball.radius;
         newState.ball.v.x = 0;
         newState.ball.a.x = 0;
     }
-    if (newState.ball.y < 0) {
-        newState.ball.y = 0;
+    if (newState.ball.y - newState.ball.radius < 0) {
+        newState.ball.y = 0 + newState.ball.radius;
         newState.ball.v.y = 0;
         newState.ball.a.y = 0;
     }
-    if (newState.ball.y > newState.size.height) {
-        newState.ball.y = newState.size.height;
+    if (newState.ball.y + newState.ball.radius > newState.size.height) {
+        newState.ball.y = newState.size.height - newState.ball.radius;
         newState.ball.v.y = 0;
         newState.ball.a.y = 0;
     }
@@ -74,12 +74,11 @@ const render = (ctx: CanvasRenderingContext2D, state: State) => {
     const reverseAxisY = true;
     const transformX = (x: number) => origin.x + (reverseAxisX ? -x : x);
     const transformY = (y: number) => origin.y + (reverseAxisY ? -y : y);
-    const ballScaleRate = 10;
 
     const ball: Ball = { ...state.ball };
     ball.x = transformX(state.ball.x);
     ball.y = transformY(state.ball.y);
-    ball.radius = state.ball.radius * ballScaleRate;
+    ball.radius = state.ball.radius;
 
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
@@ -92,7 +91,7 @@ let state: State = {
         height: h,
     },
     ball: {
-        radius: 1,
+        radius: 10,
         x: w / 2,
         y: h / 2,
         v: { x: 0.1, y: 0.5 },
