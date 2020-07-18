@@ -1,4 +1,5 @@
-{
+mobule.exports = {
+    "root": true,
     "env": {
         "browser": true,
         "es2020": true
@@ -12,7 +13,7 @@
     "parserOptions": {
         "ecmaVersion": 11,
         "sourceType": "module",
-        "tsconfigRootDir": "./",
+        "tsconfigRootDir": __dirname,
         "project": ["./tsconfig.json"]
     },
     "plugins": [
