@@ -45,4 +45,12 @@ export { };
 
 const canvas = document.getElementById("canvas")! as HTMLCanvasElement;
 const ctx = canvas.getContext("2d")!;
+const msForCycle = 1000 / 60;
+
+const render = (ctx: CanvasRenderingContext2D) => {
+};
+
+setInterval(() => {
+    render(ctx);
+}, msForCycle);
 EOT
