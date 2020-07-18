@@ -34,12 +34,14 @@ const update = (state: State): State => {
 const render = (ctx: CanvasRenderingContext2D, state: State) => {
     ctx.clearRect(0, 0, w, h);
 
-    const center: Point = {
-        x: w / 2,
-        y: h / 2,
+    const origin: Point = {
+        x: 0,
+        y: h,
     }
-    const transformX = (x: number) => center.x + x;
-    const transformY = (y: number) => center.y - y;
+    const reverseAxisX = false;
+    const reverseAxisY = true;
+    const transformX = (x: number) => origin.x + (reverseAxisX ? -x : x);
+    const transformY = (y: number) => origin.y + (reverseAxisY ? -y : y);
     const ballScaleRate = 10;
 
     let ball: Ball = {
